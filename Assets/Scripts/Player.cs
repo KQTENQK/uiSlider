@@ -6,18 +6,20 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    public event UnityAction ValueChanged;
+    public event UnityAction<float> ValueChanged;
 
     [SerializeField] private float _hitButtonDamage;
     [SerializeField] private float _healButtonHeal;
     [SerializeField] private Button _hitButton;
     [SerializeField] private Button _healButton;
 
+    public float MaxHealth { get; private set; }
     public float Health { get; private set; }
 
     private void Start()
     {
         Health = 100;
+        MaxHealth = 100;
     }
 
     private void OnEnable()
@@ -35,12 +37,14 @@ public class Player : MonoBehaviour
     private void TakeDamage()
     {
         Health -= _hitButtonDamage;
-        ValueChanged?.Invoke();
+        float healthToSliderDisplay = Health / MaxHealth;
+        ValueChanged?.Invoke(healthToSliderDisplay);
     }
 
     private void TakeHeal()
     {
         Health += _healButtonHeal;
-        ValueChanged?.Invoke();
+        float healthToSliderDisplay = Health / MaxHealth;
+        ValueChanged?.Invoke(healthToSliderDisplay);
     }
 }

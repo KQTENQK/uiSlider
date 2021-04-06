@@ -25,9 +25,8 @@ public class Healthbar : MonoBehaviour
         _player.ValueChanged -= ChangeValues;
     }
 
-    private void ChangeValues()
+    private void ChangeValues(float currentPlayerHealth)
     {
-        float currentPlayerHealth = _player.Health * 0.01f;
         float currentSliderValue = _slider.value;
         StartCoroutine(MoveValue(currentPlayerHealth, currentSliderValue));
     }
